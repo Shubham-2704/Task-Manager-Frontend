@@ -18,7 +18,7 @@ This is the frontend for a Task Manager application built with React.
 - **Styling:** Tailwind CSS
 - **Routing:** React Router DOM
 - **Form Handling:** React Hook Form & Zod
-- **UI Components:** Radix UI, Lucide React
+- **UI Components:** Radix UI, Lucide React, ShadeCN
 - **Charts:** Recharts
 - **API Client:** Axios
 
