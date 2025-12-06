@@ -1,0 +1,168 @@
+import AuthLayout from "@/components/layouts/AuthLayout";
+import React, { useContext, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { loginSchema } from "@/lib/schema";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Eye, EyeOff } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import axiosInstance from "@/utils/axiosInstance";
+import { API_PATHS } from "@/utils/apiPaths";
+import { toast } from "sonner";
+import { UserContext } from "@/context/UserContext";
+import { Spinner } from "@/components/ui/spinner";
+
+const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  const { updateUser } = useContext(UserContext);
+
+  const form = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  function toggleShowPassword() {
+    setShowPassword(!showPassword);
+  }
+
+  async function onSubmit(values) {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, values);
+
+      const { role, token } = response.data;
+
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(response.data);
+
+        // Redirect to dashboard based on role
+        if (role === "admin") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/user/dashboard");
+        }
+      }
+
+      toast.success("Login successful");
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        toast.error(error.response.data.message);
+        setLoading(false);
+      } else {
+        toast.error("Something went wrong");
+        setLoading(false);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <AuthLayout>
+      <div className="lg:w-[78%] h-3/4 mt-2 md:mt-4 md:h-full flex flex-col justify-center">
+        <h3 className="text-xl font-semibold text-black">Welcome Back</h3>
+        <p className="text-xs text-slate-700 mt-[5px] mb-6">
+          Please enter your details to log in
+        </p>
+
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <FieldGroup>
+            <Controller
+              name="email"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Email Address</FieldLabel>
+                  <Input
+                    {...field}
+                    aria-invalid={fieldState.invalid}
+                    placeholder="john@example.com"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              name="password"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Password</FieldLabel>
+                  <div className="relative">
+                    <Input
+                      {...field}
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Enter your password"
+                      type={showPassword ? "text" : "password"}
+                    />
+                    <span className="absolute right-2 top-1/2 -translate-y-1/2">
+                      {showPassword ? (
+                        <Eye
+                          className="text-primary cursor-pointer"
+                          onClick={toggleShowPassword}
+                        />
+                      ) : (
+                        <EyeOff
+                          className="text-primary cursor-pointer"
+                          onClick={toggleShowPassword}
+                        />
+                      )}
+                    </span>
+                  </div>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Button
+              type="submit"
+              disabled={loading}
+              className={`w-full ${
+                loading ? "cursor-not-allowed" : "cursor-pointer"
+              }`}
+            >
+              {loading ? (
+                <>
+                  <Spinner />
+                  Loading...
+                </>
+              ) : (
+                "LOGIN"
+              )}
+            </Button>
+            <FieldDescription className="text-center font-medium">
+              Don't have an account?{" "}
+              <Link
+                to="/signup"
+                className="text-primary underline font-semibold"
+              >
+                Sign Up
+              </Link>
+            </FieldDescription>
+          </FieldGroup>
+        </form>
+      </div>
+    </AuthLayout>
+  );
+};
+
+export default Login;
