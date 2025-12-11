@@ -22,6 +22,7 @@ import ViewTaskDetails from "./pages/User/ViewTaskDetails";
 import UserProvider from "./context/userContext.jsx";
 import { useContext } from "react";
 import { UserContext } from "./context/UserContext";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
       <div>
         <Router>
           <Routes>
+            {/* Landing Routes */}
+            <Route path="/landing" element={<LandingPage />} />
+
             {/* Auth Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
@@ -68,7 +72,7 @@ const Root = () => {
   if (loading) return <Outlet />;
 
   if (!user) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/landing" />;
   }
 
   return user.role === "admin" ? (
