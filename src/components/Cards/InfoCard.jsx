@@ -13,8 +13,8 @@ const InfoCard = ({ label, value, color }) => {
         {label}
       </p> */}
 
-      <Label className="text-xs md:text-sm text-gray-500">
-        <span className="text-sm md:text-[15px] text-black font-semibold">
+      <Label className="text-xs md:text-sm text-gray-500 dark:text-gray-400 ">
+        <span className="text-sm md:text-[15px] text-black font-semibold dark:text-white">
           {value}
         </span>
         {label}

@@ -15,7 +15,7 @@ const AuthLayout = ({ children }) => {
     //   </div>
     // </div>
 
-    <div className="min-h-screen bg-white lg:grid lg:grid-cols-2">
+    <div className="min-h-screen bg-white lg:grid  dark:bg-gray-900/80 lg:grid-cols-2">
       <div className="flex flex-col justify-center items-center p-6 sm:p-8 lg:p-12">
         <main className="w-full max-w-lg">
           <h2 className="text-xl md:text-2xl font-semibold">Task Manager</h2>

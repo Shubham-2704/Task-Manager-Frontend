@@ -27,10 +27,10 @@ const TodoListInput = ({ todoList, setTodoList, ariaInvalid }) => {
       {todoList.map((item, index) => (
         <div
           key={item}
-          className="flex justify-between bg-gray-50 border border-gray-100 px-3 py-1 rounded-md"
+          className="flex justify-between bg-gray-50 border border-gray-100 dark:bg-gray-800 dark:border-gray-700 px-3 py-1 rounded-md"
         >
           <Label>
-            <span className="text-gray-400 font-semibold">
+            <span className="text-gray-400 dark:text-white font-semibold">
               {index < 9 ? `0${index + 1}` : index + 1}
             </span>
             {item}
@@ -57,7 +57,7 @@ const TodoListInput = ({ todoList, setTodoList, ariaInvalid }) => {
           type="button"
           variant={"ghost"}
           onClick={handleAddOption}
-          className="bg-gray-50 hover:bg-blue-50 cursor-pointer border border-gray-200/50 hover:border-blue-200/50 hover:text-primary"
+          className="bg-gray-50 dark:bg-gray-800 hover:bg-blue-50 cursor-pointer border border-gray-200/50 hover:border-blue-200/50 hover:text-primary dark:text-secondary-foreground"
         >
           <Plus className="size-[18px]" /> Add
         </Button>

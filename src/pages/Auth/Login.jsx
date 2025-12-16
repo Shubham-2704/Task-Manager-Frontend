@@ -76,8 +76,10 @@ const Login = () => {
   return (
     <AuthLayout>
       <div className="lg:w-[78%] h-3/4 mt-2 md:mt-4 md:h-full flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black">Welcome Back</h3>
-        <p className="text-xs text-slate-700 mt-[5px] mb-6">
+        <h3 className="text-xl font-semibold text-black  dark:text-white">
+          Welcome Back
+        </h3>
+        <p className="text-xs text-slate-700 mt-[5px] mb-6 dark:text-gray-300">
           Please enter your details to log in
         </p>
 
@@ -149,7 +151,7 @@ const Login = () => {
                 "LOGIN"
               )}
             </Button>
-            <FieldDescription className="text-center font-medium">
+            <FieldDescription className="text-center font-medium  dark:text-white">
               Don't have an account?{" "}
               <Link
                 to="/signup"

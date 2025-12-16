@@ -19,11 +19,11 @@ const ViewTaskDetails = () => {
   const getStatusTagColor = (status) => {
     switch (status) {
       case "In Progress":
-        return "text-cyan-500 bg-cyan-50 border border-cyan-500/10";
+        return "text-cyan-500 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-900/50 dark:border-cyan-700 border border-cyan-500/10";
       case "Completed":
-        return "text-lime-500 bg-lime-50 border border-lime-500/20";
+        return "text-lime-500 dark:text-lime-300 bg-lime-50 dark:bg-lime-900/50 dark:border-lime-700 border border-lime-500/20";
       default:
-        return "text-violet-500 bg-violet-50 border border-violet-500/10";
+        return "text-violet-500 dark:text-violet-300 bg-violet-50 dark:bg-violet-900/50 dark:border-violet-700 border border-violet-500/10";
     }
   };
 
@@ -119,7 +119,7 @@ const ViewTaskDetails = () => {
                 </div>
 
                 <div className="col-span-6 md:col-span-4">
-                  <Label className="text-slate-500 text-xs md:text-sm">
+                  <Label className="text-slate-500 dark:text-slate-300 text-xs md:text-sm">
                     Assigned To
                   </Label>
                   <AvatarGroup
@@ -133,7 +133,7 @@ const ViewTaskDetails = () => {
               </div>
 
               <div>
-                <Label className="text-slate-500 text-xs md:text-sm">
+                <Label className="text-slate-500 dark:text-slate-300 text-xs md:text-sm">
                   Todo Checklist
                 </Label>
 
@@ -149,7 +149,7 @@ const ViewTaskDetails = () => {
 
               {task?.attachments?.length > 0 && (
                 <div>
-                  <Label className="text-slate-500 text-xs md:text-sm">
+                  <Label className="text-slate-500 dark:text-slate-300 text-xs md:text-sm">
                     Attachments
                   </Label>
 
@@ -176,8 +176,8 @@ export default ViewTaskDetails;
 const InfoBox = ({ label, value }) => {
   return (
     <>
-      <Label className="text-slate-500 text-xs md:text-sm">{label}</Label>
-      <p className="mt-1 text-xs md:text-[13px] font-medium text-gray-700">
+      <Label className="text-slate-500 dark:text-slate-300 text-xs md:text-sm">{label}</Label>
+      <p className="mt-1 text-xs md:text-[13px] font-medium text-gray-700 dark:text-white">
         {value}
       </p>
     </>
@@ -192,7 +192,7 @@ const TodoCheckList = ({ text, isChecked, onChange }) => {
         checked={isChecked}
         onCheckedChange={onChange}
       />
-      <Label className={"text-xs md:text-sm text-gray-800"}>{text}</Label>
+      <Label className={"text-xs md:text-sm text-gray-800 dark:text-white"}>{text}</Label>
     </div>
   );
 };
@@ -201,16 +201,17 @@ const Attachment = ({ link, index, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className="flex items-center justify-between bg-gray-50 border border-gray-100 px-3 py-2 rounded-md mb-3 mt-2 cursor-pointer"
+      className="flex items-center justify-between bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 px-3 py-2 rounded-md mb-3 mt-2 cursor-pointer"
     >
       <Label className="text-xs md:text-sm">
-        <span className="text-gray-400 font-semibold text-xs">
+        <span className="text-gray-400 dark:text-gray-300 font-semibold text-xs">
           {index < 9 ? `0${index + 1}` : index + 1}
         </span>
         {link}
       </Label>
 
-      <SquareArrowOutUpRight className="size-4 text-gray-400" />
+      <SquareArrowOutUpRight className="size-4 text-gray-400 dark:text-gray-300" />
     </div>
   );
 };
+

@@ -120,8 +120,8 @@
 }
 
 .download-btn {
-  @apply text-lime-900 hover:text-lime-600 bg-lime-100 hover:bg-lime-200 border border-lime-200 hover:border-lime-400;
+  @apply text-lime-900 hover:text-lime-600 dark:text-lime-300 bg-lime-100 dark:bg-lime-900 hover:bg-lime-200 dark:hover:bg-lime-800 border border-lime-200 hover:border-lime-400 dark:border-lime-700;
 }
 .user-card {
-  @apply bg-white shadow-md  hover:shadow-lg transition-shadow duration-200 border border-gray-200/80 cursor-pointer w-auto h-auto;
+  @apply bg-white dark:bg-gray-800 shadow-md  hover:shadow-lg transition-shadow duration-200 border border-gray-200/80 dark:border-gray-700/80 cursor-pointer w-auto h-auto;
 }
