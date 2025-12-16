@@ -32,7 +32,7 @@ const AddAttachmentsInput = ({ attachments, setAttachments }) => {
       {attachments.map((item, index) => (
         <div
           key={item}
-          className="flex justify-between bg-gray-50 border border-gray-100 px-3 py-1 rounded-md"
+          className="flex justify-between bg-gray-50 border border-gray-100  dark:bg-gray-800 dark:border-gray-700 px-3 py-1 rounded-md"
         >
           <Label>
             <Paperclip className="text-gray-400 size-[16px]" />
@@ -65,7 +65,7 @@ const AddAttachmentsInput = ({ attachments, setAttachments }) => {
           type="button"
           variant={"ghost"}
           onClick={handleAddOption}
-          className="bg-gray-50 hover:bg-blue-50 cursor-pointer border border-gray-200/50 hover:border-blue-200/50 hover:text-primary"
+          className="bg-gray-50 dark:bg-gray-800 hover:bg-blue-50 cursor-pointer border border-gray-200/50 hover:border-blue-200/50 hover:text-primary dark:text-secondary-foreground"
         >
           <Plus className="size-[18px]" /> Add
         </Button>

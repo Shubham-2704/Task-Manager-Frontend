@@ -14,7 +14,7 @@ const UserCard = ({ userInfo }) => {
   return (
     <Item className="user-card">
       <ItemMedia variant="image" className="size-12">
-        <Avatar className="size-12 border-2 border-white">
+        <Avatar className="size-12 border-2 border-white dark:border-gray-800">
           <AvatarImage src={userInfo.profileImageUrl} />
           <AvatarFallback>{userInfo.name[0]}</AvatarFallback>
         </Avatar>
@@ -87,12 +87,12 @@ const StatCard = ({ label, count, status }) => {
   const getStatusColor = () => {
     switch (status) {
       case "In Progress":
-        return "text-cyan-500 bg-cyan-50";
+        return "text-cyan-500 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-900/50";
       case "Completed":
-        return "text-indigo-500 bg-indigo-50";
+        return "text-indigo-500 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-900/50";
 
       default:
-        return "text-violet-500 bg-violet-50";
+        return "text-violet-500 dark:text-violet-300 bg-violet-50 dark:bg-violet-900/50";
     }
   };
 
