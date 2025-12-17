@@ -1,10 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { API_PATHS } from "@/utils/apiPaths";
 import axiosInstance from "@/utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import TaskStatusTabs from "@/components/TaskStatusTabs";
 import TaskCard from "@/components/Cards/TaskCard";
+import { ws } from "@/lib/socket";
+import { SocketContext } from "@/context/SocketContext";
 
 const MyTasks = () => {
   const [allTasks, setAllTasks] = useState([]);
@@ -13,6 +15,7 @@ const MyTasks = () => {
   const [filterStatus, setFilterStatus] = useState("All");
 
   const navigate = useNavigate();
+  const { taskUpdated } = useContext(SocketContext);
 
   const getAllTasks = useCallback(async () => {
     try {
@@ -46,7 +49,9 @@ const MyTasks = () => {
 
   useEffect(() => {
     getAllTasks();
-  }, [getAllTasks]);
+
+    ws && getAllTasks();
+  }, [getAllTasks, taskUpdated]);
 
   return (
     <DashboardLayout activeMenu="My Tasks">

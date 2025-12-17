@@ -23,6 +23,8 @@ import { ArrowRight } from "lucide-react";
 import TaskListTable from "@/components/TaskListTable";
 import CustomPieChart from "@/components/Charts/CustomPieChart";
 import CustomBarChart from "@/components/Charts/CustomBarChart";
+import { ws } from "@/lib/socket";
+import { SocketContext } from "@/context/SocketContext";
 
 const COLORS = ["#8D51FF", "#00B8DB", "#7BCE00"];
 
@@ -30,6 +32,7 @@ const UserDashboard = () => {
   useUserAuth();
 
   const { user } = useContext(UserContext);
+  const { taskUpdated } = useContext(SocketContext);
 
   const navigate = useNavigate();
 
@@ -80,7 +83,7 @@ const UserDashboard = () => {
 
   useEffect(() => {
     getDashboardData();
-  }, [getDashboardData]);
+  }, [getDashboardData, taskUpdated]);
 
   return (
     <DashboardLayout activeMenu="Dashboard">

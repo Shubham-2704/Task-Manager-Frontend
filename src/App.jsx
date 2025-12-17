@@ -23,43 +23,50 @@ import UserProvider from "./context/userContext.jsx";
 import { useContext } from "react";
 import { UserContext } from "./context/UserContext";
 import LandingPage from "./pages/LandingPage";
+// import ForgotPasswordPage from "./pages/Auth/ForgotPasswordPage";
+// import ResetPasswordPage from "./pages/Auth/ReserPasswordPage";
+import SocketProvider from "./context/SocketContext";
 
 function App() {
   return (
     <UserProvider>
-      <div>
-        <Router>
-          <Routes>
-            {/* Landing Routes */}
-            <Route path="/landing" element={<LandingPage />} />
+      <SocketProvider>
+        <div>
+          <Router>
+            <Routes>
+              {/* Landing Routes */}
+              <Route path="/landing" element={<LandingPage />} />
 
-            {/* Auth Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
+              {/* Auth Routes */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+              {/* <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} /> */}
 
-            {/* Admin Routes */}
-            <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-              <Route path="/admin/dashboard" element={<Dashboard />} />
-              <Route path="/admin/tasks" element={<ManageTasks />} />
-              <Route path="/admin/create-task" element={<CreateTask />} />
-              <Route path="/admin/users" element={<ManageUsers />} />
-            </Route>
+              {/* Admin Routes */}
+              <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route path="/admin/tasks" element={<ManageTasks />} />
+                <Route path="/admin/create-task" element={<CreateTask />} />
+                <Route path="/admin/users" element={<ManageUsers />} />
+              </Route>
 
-            {/* User Routes */}
-            <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-              <Route path="/user/dashboard" element={<UserDashboard />} />
-              <Route path="/user/tasks" element={<MyTasks />} />
-              <Route
-                path="/user/task-details/:id"
-                element={<ViewTaskDetails />}
-              />
-            </Route>
+              {/* User Routes */}
+              <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+                <Route path="/user/dashboard" element={<UserDashboard />} />
+                <Route path="/user/tasks" element={<MyTasks />} />
+                <Route
+                  path="/user/task-details/:id"
+                  element={<ViewTaskDetails />}
+                />
+              </Route>
 
-            {/* Default Route */}
-            <Route path="/" element={<Root />} />
-          </Routes>
-        </Router>
-      </div>
+              {/* Default Route */}
+              <Route path="/" element={<Root />} />
+            </Routes>
+          </Router>
+        </div>
+      </SocketProvider>
     </UserProvider>
   );
 }
