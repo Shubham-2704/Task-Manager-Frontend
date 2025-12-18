@@ -30,10 +30,10 @@ const FAQ = () => {
     },
     {
       question: 'Do you offer refunds?',
-      answer: 'Yes, we offer a 30-day money-back guarantee. If you\'re not satisfied with Task Manager within the first 30 days, contact our support team for a full refund, no questions asked.'
+      answer: 'Yes, we offer a 30-day money-back guarantee. If you\'re not satisfied with Task Flow within the first 30 days, contact our support team for a full refund, no questions asked.'
     },
     {
-      question: 'Can I integrate Task Manager with other tools?',
+      question: 'Can I integrate Task Flow with other tools?',
       answer: 'Yes! Professional and Enterprise plans include API access and integrations with popular tools like Slack, Google Calendar, Microsoft Teams, Dropbox, and many more. We\'re constantly adding new integrations.'
     },
     {
@@ -51,7 +51,7 @@ const FAQ = () => {
             Frequently Asked <span className="text-blue-600 dark:text-blue-400">Questions</span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300">
-            Everything you need to know about Task Manager
+            Everything you need to know about Task Flow
           </p>
         </div>
 

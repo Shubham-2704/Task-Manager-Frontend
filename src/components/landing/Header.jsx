@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { Moon, Sun, Menu, X, Zap } from "lucide-react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 
@@ -32,7 +32,7 @@ const Header = () => {
   const navItems = [
     { name: "Features", href: "#features" },
     { name: "How It Works", href: "#how-it-works" },
-    { name: "Pricing", href: "#pricing" },
+    // { name: "Pricing", href: "#pricing" },
     { name: "FAQ", href: "#faq" },
   ];
 
@@ -48,12 +48,11 @@ const Header = () => {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center transform rotate-45">
-              <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[14px] border-b-white transform -rotate-45"></div>
-            </div>
-            <span className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">
-              Task Manager
-            </span>
+            <Link to="/" className="flex items-center gap-2">
+            <Zap className="w-7 h-7 text-primary" />
+            <span className="text-2xl font-bold">TaskFlow</span>
+          </Link>
+
           </div>
 
           {/* Desktop Navigation */}

@@ -19,7 +19,7 @@ const LandingPage = () => {
       <HowItWorks />
       <Benefits />
       <Testimonials />
-      <Pricing />
+      {/* <Pricing /> */}
       <FAQ />
       <FinalCTA />
       <Footer />

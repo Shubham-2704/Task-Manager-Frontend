@@ -1,11 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Trash, Upload, User } from "lucide-react";
+import { UserContext } from "@/context/UserContext";
 
 const ProfilePhotoSelector = ({ image, setImage }) => {
   const inputRef = useRef(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
+  const { user } = useContext(UserContext);
+  const [previewUrl, setPreviewUrl] = useState(user?.profileImageUrl);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];

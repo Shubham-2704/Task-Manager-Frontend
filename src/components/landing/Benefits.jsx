@@ -55,7 +55,7 @@ const Benefits = () => {
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-white dark:bg-gray-900">
+    <section id="benefits" className="py-20 lg:py-28 bg-white dark:bg-gray-900">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
@@ -63,7 +63,7 @@ const Benefits = () => {
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Why Choose{" "}
               <span className="text-blue-600 dark:text-blue-400">
-                Task Manager
+                Task Flow
               </span>
               ?
             </h2>

@@ -21,6 +21,7 @@ import { API_PATHS } from "@/utils/apiPaths";
 import { UserContext } from "@/context/UserContext";
 import uploadImage from "@/utils/uploadImage";
 import { Spinner } from "@/components/ui/spinner";
+import { motion } from "framer-motion";
 
 const SignUp = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -94,6 +95,12 @@ const SignUp = () => {
 
   return (
     <AuthLayout>
+      <motion.div
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full"
+      >
       <div className="lg:w-[100%] h-auto md:h-full mt-2 md:mt-4 flex flex-col justify-center">
         <h3 className="text-xl font-semibold text-black  dark:text-white">
           Create an account
@@ -228,6 +235,7 @@ const SignUp = () => {
           </div>
         </form>
       </div>
+      </motion.div>
     </AuthLayout>
   );
 };

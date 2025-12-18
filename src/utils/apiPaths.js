@@ -5,13 +5,14 @@ export const API_PATHS = {
     REGISTER: `/auth/register`,
     LOGIN: `/auth/login`,
     GET_PROFILE: `/auth/profile`, // Get logged-in user details
+    UPDATE_PROFILE: `/auth/profile`, // Update user details
   },
 
   USERS: {
     GET_ALL_USERS: `/users`, // Get all users (Admin only)
     GET_USER_BY_ID: (userId) => `/users/${userId}`,
     CREATE_USER: `/users`, // Create a new user (Admin only)
-    UPDATE_USER: (userId) => `/users/${userId}`, // Update user details
+    // UPDATE_USER: (userId) => `/users/${userId}`, // Update user details
     DELETE_USER: (userId) => `/users/${userId}`, // Delete a user
   },
 

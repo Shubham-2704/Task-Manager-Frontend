@@ -8,7 +8,7 @@ const Testimonials = () => {
       name: 'Sarah Johnson',
       role: 'Project Manager at TechCorp',
       avatar: 'SJ',
-      content: 'Task Manager has completely transformed how our team works. We\'ve seen a 40% increase in productivity and our project delivery times have improved significantly.',
+      content: 'Task Flow has completely transformed how our team works. We\'ve seen a 40% increase in productivity and our project delivery times have improved significantly.',
       rating: 5
     },
     {
@@ -29,13 +29,13 @@ const Testimonials = () => {
       name: 'David Martinez',
       role: 'Operations Director at GlobalCo',
       avatar: 'DM',
-      content: 'Switching to Task Manager was the best decision for our team. The customer support is outstanding, and the features are exactly what we needed.',
+      content: 'Switching to Task Flow was the best decision for our team. The customer support is outstanding, and the features are exactly what we needed.',
       rating: 5
     }
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-gray-50 dark:bg-gray-800">
+    <section id="testimonials" className="py-20 lg:py-28 bg-gray-50 dark:bg-gray-800">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">

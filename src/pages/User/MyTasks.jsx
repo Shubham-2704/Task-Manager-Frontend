@@ -76,6 +76,10 @@ const MyTasks = () => {
               onClick={() => handleClick(task._id)}
             />
           ))}
+          {/* No Tasks Found */}
+          {!allTasks.length && (<p className="col-span-full text-center text-gray-500">
+              No Task found
+            </p>)}
         </div>
       </div>
     </DashboardLayout>

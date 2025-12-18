@@ -48,7 +48,7 @@ const FinalCTA = () => {
                 </Button>
               </Link>
               <Button className="bg-transparent hover:bg-white/10 cursor-pointer border-2 border-white text-white px-8 py-6 rounded-lg font-semibold text-lg transition-all duration-200">
-                Schedule Demo
+                Watch Demo
               </Button>
             </div>
 
@@ -67,7 +67,7 @@ const FinalCTA = () => {
                 </div>
                 <span className="ml-4">
                   <strong className="text-white">10,000+ teams</strong> are
-                  already using Task Manager
+                  already using Task Flow
                 </span>
               </div>
             </div>
