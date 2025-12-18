@@ -132,14 +132,8 @@ const UserDashboard = () => {
         {dashboardData?.charts?.taskDistribution?.All === 0 ? (
           <div className="flex flex-col items-center justify-center h-64">
             <p className="text-lg text-gray-500">
-              No tasks available. Create a new task to get started.
+              No tasks available.
             </p>
-            <Button
-              onClick={() => navigate("/admin/create-task")}
-              className="mt-4"
-            >
-              Create Task
-            </Button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

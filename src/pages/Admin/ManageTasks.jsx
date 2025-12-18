@@ -13,6 +13,7 @@ import NoData from "@/components/NoData";
 
 const ManageTasks = () => {
   const [allTasks, setAllTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [tabs, setTabs] = useState([]);
   const [filterStatus, setFilterStatus] = useState("All");
@@ -21,27 +22,33 @@ const ManageTasks = () => {
 
   const getAllTasks = useCallback(async () => {
     try {
-      const response = await axiosInstance.get(API_PATHS.TASKS.GET_ALL_TASKS, {
-        params: {
-          status: filterStatus === "All" ? undefined : filterStatus,
-        },
-      });
+      setLoading(true);
 
-      setAllTasks(response.data?.tasks?.length > 0 ? response.data.tasks : []);
+      const response = await axiosInstance.get(
+        API_PATHS.TASKS.GET_ALL_TASKS,
+        {
+          params: {
+            status: filterStatus === "All" ? undefined : filterStatus,
+          },
+        }
+      );
 
-      // Map statusSummary data with fixed labels and order
+      const tasks = response.data?.tasks || [];
+      setAllTasks(tasks);
+
       const statusSummary = response.data?.statusSummary || {};
 
-      const statusArray = [
+      setTabs([
         { label: "All", count: statusSummary.all || 0 },
         { label: "Pending", count: statusSummary.pendingTasks || 0 },
         { label: "In Progress", count: statusSummary.inProgressTasks || 0 },
         { label: "Completed", count: statusSummary.completedTasks || 0 },
-      ];
-
-      setTabs(statusArray);
+      ]);
     } catch (error) {
       console.error("Error fetching tasks:", error);
+      toast.error("Failed to load tasks");
+    } finally {
+      setLoading(false);
     }
   }, [filterStatus]);
 
@@ -49,37 +56,33 @@ const ManageTasks = () => {
     navigate("/admin/create-task", { state: { taskId: taskData._id } });
   };
 
-  // Download task report
   const handleDownloadReport = async () => {
     try {
-      const response = await axiosInstance.get(API_PATHS.REPORTS.EXPORT_TASKS, {
-        responseType: "blob",
-      });
+      const response = await axiosInstance.get(
+        API_PATHS.REPORTS.EXPORT_TASKS,
+        { responseType: "blob" }
+      );
 
-      // Create a URL for the blob
       const url = window.URL.createObjectURL(new Blob([response.data]));
-
-      // Create a link element
       const link = document.createElement("a");
       link.href = url;
       link.setAttribute("download", "task_details.xlsx");
       document.body.appendChild(link);
-
-      // Trigger the download
       link.click();
 
-      // Clean up
-      link.parentNode.removeChild(link);
+      document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error("Error downloading report:", error);
-      toast.error("Failed to download expense details. Please try again.");
+      toast.error("Failed to download task report");
     }
   };
 
   useEffect(() => {
     getAllTasks();
   }, [getAllTasks]);
+
+  // ⭐ Dynamic skeleton count
+  const skeletonCount = allTasks.length > 0 ? allTasks.length : 3;
 
   return (
     <DashboardLayout activeMenu="Manage Tasks">
@@ -116,18 +119,28 @@ const ManageTasks = () => {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
-          {allTasks?.length === 0 ? (
-            <TaskCardSkeleton />
-          ) : (
-            allTasks?.map((task) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+          {/* Loading Skeletons */}
+          {loading &&
+            Array.from({ length: skeletonCount }).map((_, index) => (
+              <TaskCardSkeleton key={index} />
+            ))}
+
+          {/* Tasks */}
+          {!loading &&
+            allTasks.length > 0 &&
+            allTasks.map((task) => (
               <TaskCard
                 key={task._id}
                 task={task}
                 onClick={() => handleClick(task)}
               />
-            ))
-          )}
+            ))}
+          {/* No Tasks Found */}
+          {!loading && allTasks.length === 0 && (<p className="col-span-full text-center text-gray-500">
+              No Task found
+            </p>)}
         </div>
       </div>
     </DashboardLayout>

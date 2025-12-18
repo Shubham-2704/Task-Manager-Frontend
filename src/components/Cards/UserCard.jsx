@@ -9,10 +9,73 @@ import {
   ItemTitle,
 } from "@/components/ui/item";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Trash, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { API_PATHS } from "@/utils/apiPaths";
+import axiosInstance from "@/utils/axiosInstance";
+import { toast } from "sonner";
 
-const UserCard = ({ userInfo }) => {
+const UserCard = ({ userInfo, getAllUsers }) => {
+  const hadleDeleteUser = async () => {
+    try {
+      const response = await axiosInstance.delete(
+        API_PATHS.USERS.DELETE_USER(userInfo._id)
+      );
+      toast.success("User deleted successfully.");
+      getAllUsers();
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      toast.error("Failed to delete user. Please try again.");
+    }
+  };
+
   return (
-    <Item className="user-card">
+    <Item className="user-card relative">
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className=" absolute top-3 right-3 text-gray-400 dark:text-gray-100 hover:text-red-500 dark:hover:text-red-500 cursor-pointer"
+          >
+            <Trash2 size={16} />
+          </Button>
+        </AlertDialogTrigger>
+
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete user?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete{" "}
+              <span className="font-semibold">{userInfo.name}</span>? This
+              action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel className="cursor-pointer">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 cursor-pointer"
+              onClick={hadleDeleteUser}
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       <ItemMedia variant="image" className="size-12">
         <Avatar className="size-12 border-2 border-white dark:border-gray-800">
           <AvatarImage src={userInfo.profileImageUrl} />

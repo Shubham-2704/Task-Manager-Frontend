@@ -28,7 +28,7 @@ const Navbar = ({ activeMenu }) => {
 
       <div className="flex  flex-1 items-center justify-between">
         <h2 className="text-lg font-medium text-black dark:text-white">
-          Task Manager
+          Task Flow
         </h2>
 
         <button

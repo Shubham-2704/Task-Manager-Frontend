@@ -23,8 +23,8 @@ import UserProvider from "./context/userContext.jsx";
 import { useContext } from "react";
 import { UserContext } from "./context/UserContext";
 import LandingPage from "./pages/LandingPage";
-// import ForgotPasswordPage from "./pages/Auth/ForgotPasswordPage";
-// import ResetPasswordPage from "./pages/Auth/ReserPasswordPage";
+import ForgotPasswordPage from "./pages/Auth/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/Auth/ResetPasswordPage";
 import SocketProvider from "./context/SocketContext";
 
 function App() {
@@ -40,8 +40,8 @@ function App() {
               {/* Auth Routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
-              {/* <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-              <Route path="/reset-password" element={<ResetPasswordPage />} /> */}
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
 
               {/* Admin Routes */}
               <Route element={<PrivateRoute allowedRoles={["admin"]} />}>

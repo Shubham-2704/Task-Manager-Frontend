@@ -34,12 +34,28 @@ const UserProvider = ({ children }) => {
     fetchUser();
   }, [user]);
 
-  const updateUser = (userData) => {
-    // console.log("updateUser called");
+  const updateUser = async (userData) => {
+    console.log("updateUser called");
 
     setUser(userData);
     localStorage.setItem("token", userData.token); // Save token
     setLoading(false);
+  };
+
+  const updateUserProfile = async (userData) => {
+    try {
+      const response = await axiosInstance.put(
+        API_PATHS.AUTH.UPDATE_PROFILE,
+        userData
+      );
+      setUser({ ...user, profileImageUrl: response.data.profileImageUrl });
+      // localStorage.setItem("token", response.data.token); // Save token if it changes or for consistency
+    } catch (error) {
+      console.error("Failed to update user profile", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const clearUser = () => {
@@ -52,7 +68,9 @@ const UserProvider = ({ children }) => {
   // console.log(user);
 
   return (
-    <UserContext.Provider value={{ user, loading, updateUser, clearUser }}>
+    <UserContext.Provider
+      value={{ user, loading, updateUser, clearUser, updateUserProfile }}
+    >
       {children}
     </UserContext.Provider>
   );

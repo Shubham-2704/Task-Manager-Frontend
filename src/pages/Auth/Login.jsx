@@ -19,6 +19,7 @@ import { API_PATHS } from "@/utils/apiPaths";
 import { toast } from "sonner";
 import { UserContext } from "@/context/UserContext";
 import { Spinner } from "@/components/ui/spinner";
+import { motion } from "framer-motion";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -75,6 +76,12 @@ const Login = () => {
 
   return (
     <AuthLayout>
+      <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="w-full"
+            >
       <div className="lg:w-[78%] h-3/4 mt-2 md:mt-4 md:h-full flex flex-col justify-center">
         <h3 className="text-xl font-semibold text-black  dark:text-white">
           Welcome Back
@@ -107,7 +114,12 @@ const Login = () => {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
+                  <div className="flex justify-between items-center mb-1">
                   <FieldLabel>Password</FieldLabel>
+                  <Link to="/forgot-password" className="text-sm font-medium text-primary hover:underline">
+                    Forgot password?
+                  </Link>
+                  </div>
                   <div className="relative">
                     <Input
                       {...field}
@@ -163,6 +175,7 @@ const Login = () => {
           </FieldGroup>
         </form>
       </div>
+      </motion.div>
     </AuthLayout>
   );
 };
