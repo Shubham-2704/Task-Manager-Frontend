@@ -48,7 +48,7 @@ const Hero = () => {
               </Link>
               <Button
                 variant="outline"
-                className="border-2 border-gray-300 dark:border-gray-600 hover:border-blue-600 dark:hover:border-blue-400 text-gray-700 dark:text-gray-300 px-8 py-6 rounded-lg font-semibold text-lg transition-all duration-200"
+                className="border-2 border-gray-300 cursor-pointer dark:border-gray-600 hover:border-blue-600 dark:hover:border-blue-400 text-gray-700 dark:text-gray-300 px-8 py-6 rounded-lg font-semibold text-lg transition-all duration-200"
               >
                 Watch Demo
               </Button>

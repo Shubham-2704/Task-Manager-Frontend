@@ -12,7 +12,7 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "@/utils/axiosInstance";
 import { API_PATHS } from "@/utils/apiPaths";
@@ -60,7 +60,7 @@ const Login = () => {
         }
       }
 
-      toast.success("Login successful");
+      toast.success("Login successfully");
     } catch (error) {
       if (error.response && error.response.data.message) {
         toast.error(error.response.data.message);
@@ -77,104 +77,133 @@ const Login = () => {
   return (
     <AuthLayout>
       <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              className="w-full"
-            >
-      <div className="lg:w-[78%] h-3/4 mt-2 md:mt-4 md:h-full flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black  dark:text-white">
-          Welcome Back
-        </h3>
-        <p className="text-xs text-slate-700 mt-[5px] mb-6 dark:text-gray-300">
-          Please enter your details to log in
-        </p>
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full"
+      >
+        <div className="lg:w-[78%] h-3/4 mt-2 md:mt-4 md:h-full flex flex-col justify-center">
+          <h3 className="text-xl font-semibold text-black  dark:text-white">
+            Welcome Back
+          </h3>
+          <p className="text-xs text-slate-700 mt-[5px] mb-6 dark:text-gray-300">
+            Please enter your details to log in
+          </p>
 
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FieldGroup>
-            <Controller
-              name="email"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Email Address</FieldLabel>
-                  <Input
-                    {...field}
-                    aria-invalid={fieldState.invalid}
-                    placeholder="john@example.com"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name="password"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <div className="flex justify-between items-center mb-1">
-                  <FieldLabel>Password</FieldLabel>
-                  <Link to="/forgot-password" className="text-sm font-medium text-primary hover:underline">
-                    Forgot password?
-                  </Link>
-                  </div>
-                  <div className="relative">
-                    <Input
-                      {...field}
-                      aria-invalid={fieldState.invalid}
-                      placeholder="Enter your password"
-                      type={showPassword ? "text" : "password"}
-                    />
-                    <span className="absolute right-2 top-1/2 -translate-y-1/2">
-                      {showPassword ? (
-                        <Eye
-                          className="text-primary cursor-pointer"
-                          onClick={toggleShowPassword}
-                        />
-                      ) : (
-                        <EyeOff
-                          className="text-primary cursor-pointer"
-                          onClick={toggleShowPassword}
-                        />
-                      )}
-                    </span>
-                  </div>
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Button
-              type="submit"
-              disabled={loading}
-              className={`w-full ${
-                loading ? "cursor-not-allowed" : "cursor-pointer"
-              }`}
-            >
-              {loading ? (
-                <>
-                  <Spinner />
-                  Loading...
-                </>
-              ) : (
-                "LOGIN"
-              )}
-            </Button>
-            <FieldDescription className="text-center font-medium  dark:text-white">
-              Don't have an account?{" "}
-              <Link
-                to="/signup"
-                className="text-primary underline font-semibold"
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <FieldGroup>
+              <Controller
+                name="email"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field
+                    data-invalid={fieldState.invalid}
+                    className="space-y-0"
+                  >
+                    <FieldLabel>Email Address</FieldLabel>
+
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+
+                      <Input
+                        {...field}
+                        aria-invalid={fieldState.invalid}
+                        placeholder="john@example.com"
+                        className="pl-10"
+                      />
+                    </div>
+
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="password"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field
+                    data-invalid={fieldState.invalid}
+                    className="space-y-1"
+                  >
+                    {/* Label row */}
+                    <div className="flex items-center justify-between mb-1">
+                      <FieldLabel>Password</FieldLabel>
+
+                      <Link
+                        to="/forgot-password"
+                        className="text-sm font-medium text-primary hover:underline"
+                      >
+                        Forgot password?
+                      </Link>
+                    </div>
+
+                    {/* Input wrapper */}
+                    <div className="relative">
+                      {/* Left lock icon */}
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+
+                      {/* Input */}
+                      <Input
+                        {...field}
+                        aria-invalid={fieldState.invalid}
+                        placeholder="Enter your password"
+                        type={showPassword ? "text" : "password"}
+                        className="pl-10 pr-10"
+                      />
+
+                      {/* Right eye toggle */}
+                      <button
+                        type="button"
+                        onClick={toggleShowPassword}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-primary"
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
+                        }
+                      >
+                        {showPassword ? (
+                          <Eye className="h-5 w-5 cursor-pointer" />
+                        ) : (
+                          <EyeOff className="h-5 w-5 cursor-pointer" />
+                        )}
+                      </button>
+                    </div>
+
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+              <Button
+                type="submit"
+                disabled={loading}
+                className={`w-full ${
+                  loading ? "cursor-not-allowed" : "cursor-pointer"
+                }`}
               >
-                Sign Up
-              </Link>
-            </FieldDescription>
-          </FieldGroup>
-        </form>
-      </div>
+                {loading ? (
+                  <>
+                    <Spinner />
+                    Loading...
+                  </>
+                ) : (
+                  "LOGIN"
+                )}
+              </Button>
+              <FieldDescription className="text-center font-medium  dark:text-white">
+                Don't have an account?{" "}
+                <Link
+                  to="/signup"
+                  className="text-primary underline font-semibold"
+                >
+                  Sign Up
+                </Link>
+              </FieldDescription>
+            </FieldGroup>
+          </form>
+        </div>
       </motion.div>
     </AuthLayout>
   );
