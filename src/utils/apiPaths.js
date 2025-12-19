@@ -6,6 +6,11 @@ export const API_PATHS = {
     LOGIN: `/auth/login`,
     GET_PROFILE: `/auth/profile`, // Get logged-in user details
     UPDATE_PROFILE: `/auth/profile`, // Update user details
+
+    // 🔐 FORGOT PASSWORD
+    FORGOT_PASSWORD: `/auth/forgot-password`,
+    VERIFY_RESET_OTP: `/auth/verify-reset-otp`,
+    RESET_PASSWORD: `/auth/reset-password`,
   },
 
   USERS: {

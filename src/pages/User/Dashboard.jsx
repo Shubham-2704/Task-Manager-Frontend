@@ -93,6 +93,9 @@ const UserDashboard = () => {
             <CardTitle className="text-xl md:text-2xl">
               Good Morning! {user?.name}
             </CardTitle>
+            <CardTitle className="text-xs md:text-[14px] text-gray-500 dark:text-gray-400">
+              You have {dashboardData?.charts?.taskDistribution?.Pending} tasks Pending today!
+            </CardTitle>
             <CardDescription className="text-xs md:text-[13px] text-gray-400">
               {format(new Date(), "EEEE do MMM yyyy")}
             </CardDescription>

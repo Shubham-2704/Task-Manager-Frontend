@@ -13,29 +13,86 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import axiosInstance from "@/utils/axiosInstance";
+import { API_PATHS } from "@/utils/apiPaths";
+import { toast } from "sonner";
+import { useEffect } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 const ForgotPasswordPage = () => {
   const [step, setStep] = useState("email");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(0);
 
   const navigate = useNavigate();
 
-  const handleSendOtp = (e) => {
+  // 📩 SEND OTP
+  const handleSendOtp = async (e) => {
     e.preventDefault();
-    // API CALL → SEND OTP
-    setStep("otp");
+    setResendLoading(true);
+
+    try {
+      const response = await axiosInstance.post(
+        API_PATHS.AUTH.FORGOT_PASSWORD,
+        { email }
+      );
+
+      toast.success("OTP sent to your email");
+
+      // ⏳ START TIMER (10 mins)
+      setTimeLeft(response.data.expiresIn || 600);
+      setStep("otp");
+    } catch (error) {
+      toast.warning(error.response?.data?.message || "Failed to send OTP");
+    } finally {
+      setResendLoading(false);
+    }
   };
 
-  const handleVerifyOtp = (e) => {
+  // 🔐 VERIFY OTP
+  const handleVerifyOtp = async (e) => {
     e.preventDefault();
-    // API CALL → VERIFY OTP SUCCESS
+    setLoading(true);
 
-    // ✅ Redirect to reset password page
-    navigate("/reset-password", {
-      state: { email, otp },
-    });
+    try {
+      await axiosInstance.post(API_PATHS.AUTH.VERIFY_RESET_OTP, { email, otp });
+
+      toast.success("OTP verified");
+
+      navigate("/reset-password", {
+        state: { email, otp },
+      });
+    } catch (error) {
+      if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Invalid OTP");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // ⏰ FORMAT TIME
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  };
+
+  // ⏲️ TIMER EFFECT
+  useEffect(() => {
+    if (step !== "otp" || timeLeft <= 0) return;
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [step, timeLeft]);
 
   return (
     <AuthLayout>
@@ -76,8 +133,20 @@ const ForgotPasswordPage = () => {
                   </div>
                 </div>
 
-                <Button type="submit" className="w-full" size="lg">
-                  SEND OTP
+                <Button
+                  type="submit"
+                  className="w-full cursor-pointer"
+                  size="lg"
+                  disabled={resendLoading}
+                >
+                  {resendLoading ? (
+                    <>
+                      <Spinner />
+                      SENDING...
+                    </>
+                  ) : (
+                    "SEND OTP"
+                  )}
                 </Button>
               </form>
             )}
@@ -89,6 +158,7 @@ const ForgotPasswordPage = () => {
                   <Label>Enter OTP</Label>
                   <Input
                     type="text"
+                    maxLength="6"
                     placeholder="6-digit OTP"
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
@@ -96,9 +166,51 @@ const ForgotPasswordPage = () => {
                   />
                 </div>
 
-                <Button type="submit" className="w-full" size="lg">
-                  VERIFY OTP
+                <Button
+                  type="submit"
+                  className="w-full cursor-pointer"
+                  size="lg"
+                  disabled={loading || timeLeft <= 0}
+                >
+                  {loading ? (
+                    <>
+                      <Spinner />
+                      VERIFYING...
+                    </>
+                  ) : (
+                    "VERIFY OTP"
+                  )}
                 </Button>
+                {timeLeft <= 0 && (
+                  <Button
+                    variant="outline"
+                    className="w-full mt-0 cursor-pointer"
+                    onClick={handleSendOtp}
+                    disabled={resendLoading}
+                  >
+                    {resendLoading ? (
+                      <>
+                        <Spinner />
+                        RESENDING...
+                      </>
+                    ) : (
+                      "RESEND OTP"
+                    )}
+                  </Button>
+                )}
+                {timeLeft > 0 ? (
+                  <p className="text-sm text-muted-foreground text-center">
+                    OTP expires in:{" "}
+                    <span className="font-semibold text-primary">
+                      {formatTime(timeLeft)}
+                      <span className="text-muted-foreground"> minutes</span>
+                    </span>
+                  </p>
+                ) : (
+                  <p className="text-sm text-red-500 text-center">
+                    OTP expired. Please resend OTP.
+                  </p>
+                )}
               </form>
             )}
 

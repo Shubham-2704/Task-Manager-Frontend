@@ -12,7 +12,7 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Mail, User, Lock, Key } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import ProfilePhotoSelector from "@/components/Inputs/ProfilePhotoSelector";
 import { toast } from "sonner";
@@ -101,140 +101,177 @@ const SignUp = () => {
         transition={{ duration: 0.5 }}
         className="w-full"
       >
-      <div className="lg:w-[100%] h-auto md:h-full mt-2 md:mt-4 flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black  dark:text-white">
-          Create an account
-        </h3>
-        <p className="text-xs text-slate-700 mt-[5px] mb-6 dark:text-gray-300">
-          Join us today by entering your details below.
-        </p>
+        <div className="lg:w-[100%] h-auto md:h-full mt-2 md:mt-4 flex flex-col justify-center">
+          <h3 className="text-xl font-semibold text-black  dark:text-white">
+            Create an account
+          </h3>
+          <p className="text-xs text-slate-700 mt-[5px] mb-6 dark:text-gray-300">
+            Join us today by entering your details below.
+          </p>
 
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
 
-          <div>
-            <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Controller
-                name="name"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel>Full Name</FieldLabel>
-                    <Input
-                      {...field}
-                      aria-invalid={fieldState.invalid}
-                      placeholder="John Doe"
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
-                )}
-              />
+            <div>
+              <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Controller
+                  name="name"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field
+                      data-invalid={fieldState.invalid}
+                      className="space-y-0"
+                    >
+                      <FieldLabel>Full Name</FieldLabel>
 
-              <Controller
-                name="email"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel>Email Address</FieldLabel>
-                    <Input
-                      {...field}
-                      aria-invalid={fieldState.invalid}
-                      placeholder="john@example.com"
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
-                )}
-              />
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
 
-              <Controller
-                name="password"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel>Password</FieldLabel>
-                    <div className="relative">
-                      <Input
-                        {...field}
-                        aria-invalid={fieldState.invalid}
-                        placeholder="Enter your password"
-                        type={showPassword ? "text" : "password"}
-                      />
-                      <span className="absolute right-2 top-1/2 -translate-y-1/2">
-                        {showPassword ? (
-                          <Eye
-                            className="h-5 w-5 text-primary cursor-pointer"
-                            onClick={toggleShowPassword}
-                          />
-                        ) : (
-                          <EyeOff
-                            className="h-5 w-5 text-primary cursor-pointer"
-                            onClick={toggleShowPassword}
-                          />
-                        )}
-                      </span>
-                    </div>
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
-                )}
-              />
+                        <Input
+                          {...field}
+                          aria-invalid={fieldState.invalid}
+                          placeholder="John Doe"
+                          className="pl-10"
+                        />
+                      </div>
 
-              <Controller
-                name="adminInviteToken"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel>Admin Invite Token</FieldLabel>
-                    <Input
-                      {...field}
-                      aria-invalid={fieldState.invalid}
-                      placeholder="6 Digit Code"
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
-                )}
-              />
-            </FieldGroup>
-            {/* <Button type="submit" className="w-full cursor-pointer my-4">
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+
+                <Controller
+                  name="email"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field
+                      data-invalid={fieldState.invalid}
+                      className="space-y-0"
+                    >
+                      <FieldLabel>Email Address</FieldLabel>
+
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+
+                        <Input
+                          {...field}
+                          aria-invalid={fieldState.invalid}
+                          placeholder="john@example.com"
+                          className="pl-10"
+                        />
+                      </div>
+
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+
+                <Controller
+                  name="password"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field
+                      data-invalid={fieldState.invalid}
+                      className="space-y-0"
+                    >
+                      <FieldLabel>Password</FieldLabel>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+                        <Input
+                          {...field}
+                          aria-invalid={fieldState.invalid}
+                          placeholder="Enter your password"
+                          className="pl-10"
+                          type={showPassword ? "text" : "password"}
+                        />
+                        <span className="absolute right-2 top-1/2 -translate-y-1/2">
+                          {showPassword ? (
+                            <Eye
+                              className="h-5 w-5 text-primary cursor-pointer"
+                              onClick={toggleShowPassword}
+                            />
+                          ) : (
+                            <EyeOff
+                              className="h-5 w-5 text-primary cursor-pointer"
+                              onClick={toggleShowPassword}
+                            />
+                          )}
+                        </span>
+                      </div>
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+
+                <Controller
+                  name="adminInviteToken"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field
+                      data-invalid={fieldState.invalid}
+                      className="space-y-0"
+                    >
+                      <FieldLabel>Admin Invite Token</FieldLabel>
+
+                      <div className="relative">
+                        <Key className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+
+                        <Input
+                          {...field}
+                          aria-invalid={fieldState.invalid}
+                          placeholder="6 Digit Code"
+                          className="pl-10"
+                          maxLength={6}
+                          inputMode="numeric"
+                        />
+                      </div>
+
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+              </FieldGroup>
+              {/* <Button type="submit" className="w-full cursor-pointer my-4">
               Sign Up
             </Button> */}
 
-            <Button
-              type="submit"
-              disabled={loading}
-              className={`w-full my-4 ${
-                loading ? "cursor-not-allowed" : "cursor-pointer"
-              }`}
-            >
-              {loading ? (
-                <>
-                  <Spinner />
-                  Loading...
-                </>
-              ) : (
-                "SIGN UP"
-              )}
-            </Button>
-
-            <FieldDescription className="text-center font-medium  dark:text-white">
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                className="text-primary underline font-semibold"
+              <Button
+                type="submit"
+                disabled={loading}
+                className={`w-full my-4 ${
+                  loading ? "cursor-not-allowed" : "cursor-pointer"
+                }`}
               >
-                Log In
-              </Link>
-            </FieldDescription>
-          </div>
-        </form>
-      </div>
+                {loading ? (
+                  <>
+                    <Spinner />
+                    Loading...
+                  </>
+                ) : (
+                  "SIGN UP"
+                )}
+              </Button>
+
+              <FieldDescription className="text-center font-medium  dark:text-white">
+                Already have an account?{" "}
+                <Link
+                  to="/login"
+                  className="text-primary underline font-semibold"
+                >
+                  Log In
+                </Link>
+              </FieldDescription>
+            </div>
+          </form>
+        </div>
       </motion.div>
     </AuthLayout>
   );

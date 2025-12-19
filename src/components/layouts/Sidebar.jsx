@@ -15,6 +15,7 @@ import {
 import ProfilePhotoSelector from "@/components/Inputs/ProfilePhotoSelector";
 import { Camera, Edit, Edit2, Pencil } from "lucide-react";
 import uploadImage from "@/utils/uploadImage";
+import { toast } from "sonner";
 
 const Sidebar = ({ activeMenu }) => {
   const { user, clearUser, updateUserProfile } = useContext(UserContext);
@@ -28,6 +29,7 @@ const Sidebar = ({ activeMenu }) => {
   const handleClick = (route) => {
     if (route === "logout") {
       handleLogout();
+      toast.success("Logged out successfully");
       return;
     }
 
@@ -109,6 +111,7 @@ const Sidebar = ({ activeMenu }) => {
                 type="button"
                 onClick={handleSaveProfileImage}
                 disabled={isUploading}
+                className="cursor-pointer"
               >
                 {isUploading ? "Saving..." : "Save changes"}
               </Button>
